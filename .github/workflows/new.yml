@@ -1,0 +1,22 @@
+name: Deploy CI
+
+on:
+  push:
+    branches:
+      - deploy
+
+jobs:
+  setup-sample-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Remove Existing Database Data
+        run: npx ts-node remove_db.ts
+
+      - name: Insert Sample Data
+        run: npx ts-node insert_sample_db.ts
